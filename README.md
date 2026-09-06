@@ -29,6 +29,7 @@ This project was built to develop practical skills relevant to **cloud computing
 * CSV
 * Git
 * GitHub
+* Docker
 
 ## How It Works
 
@@ -78,6 +79,9 @@ deployment-health-checker/
 │
 ├── health_checker.py
 ├── health_log.csv
+├── requirements.txt
+├── Dockerfile
+├── .gitignore
 └── README.md
 ```
 
@@ -106,6 +110,22 @@ pip install requests
 ```bash
 python3 health_checker.py
 ```
+
+## Running with Docker
+
+### 1. Build the Docker image
+
+```bash
+docker build -t deployment-health-checker .
+```
+
+### 2. Run the container
+
+```bash
+docker run --rm deployment-health-checker
+```
+
+The container runs the health checker and displays the availability and response-time results in the terminal.
 
 ## Skills Demonstrated
 
