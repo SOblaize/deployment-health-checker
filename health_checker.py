@@ -1,8 +1,15 @@
+from flask import Flask
 import requests
 import time
 import csv
 import os
 from datetime import datetime
+
+app = Flask(__name__)
+
+@app.route("/")
+def home():
+    return "Deployment Health Checker is running!"
 
 up_count = 0
 down_count = 0
@@ -108,3 +115,5 @@ print("Websites checked:", len(websites))
 print("Websites UP:", up_count)
 print("Websites DOWN:", down_count)
 print("Average response time:", round(average_response_time, 3), "seconds")
+
+app.run(host="0.0.0.0", port=10000)
