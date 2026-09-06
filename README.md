@@ -1,81 +1,82 @@
 # Deployment Health Checker
 
-A Python-based website health monitoring tool that checks website availability, measures response time, logs results to a CSV file, and provides a summary of overall website health.
+A Python project that checks whether websites are working, measures how quickly they respond, and records the results.
 
-## Project Overview
+I built this project to learn more about **cloud computing, infrastructure monitoring, Docker and DevOps**.
 
-The Deployment Health Checker is a lightweight monitoring tool designed to simulate a basic infrastructure health-check process.
+The project is also deployed online using Render, so the health checker can be accessed through a web browser.
 
-The program sends HTTP requests to a list of websites and records whether each website is available, how quickly it responds, and the overall health of the monitored services.
+**Live app:** https://deployment-health-checker.onrender.com
 
-This project was built to develop practical skills relevant to **cloud computing, infrastructure monitoring, and DevOps**.
+**GitHub:** https://github.com/SOblaize/deployment-health-checker
 
-## Features
+## What it does
 
-* Checks multiple websites automatically
-* Detects whether websites are UP or DOWN
-* Measures HTTP response time
-* Handles request errors and timeouts
-* Logs monitoring results to a CSV file
-* Calculates average response time
-* Provides an overall health summary
-* Uses Git for version control
-* Hosted publicly on GitHub
+The health checker currently monitors:
 
-## Technologies Used
-
-* Python
-* Requests
-* CSV
-* Git
+* Google
 * GitHub
-* Docker
+* BBC
 
-## How It Works
+For each website, it:
 
-1. A list of websites is defined.
-2. The program sends an HTTP request to each website.
-3. Response time is measured.
-4. The website is classified as UP or DOWN.
-5. The result is recorded in `health_log.csv`.
-6. The average response time is calculated.
-7. A final health summary is displayed in the terminal.
+* Checks whether the website is UP or DOWN
+* Measures the response time
+* Marks the performance as GOOD or SLOW
+* Records the result in a CSV file
+* Calculates the average response time
 
-### Monitoring Workflow
+The results are also shown on a simple Flask web page.
+
+## Example
+
+```text
+Health Check Summary
+
+Websites checked: 3
+Websites UP: 3
+Websites DOWN: 0
+Average response time: 0.270 seconds
+```
+
+The web page displays the individual results, including the website status, response time and performance.
+
+## How it works
 
 ```text
 Websites
     ↓
 HTTP Requests
     ↓
-Availability Check
+Check Status
     ↓
-Response Time Measurement
+Measure Response Time
     ↓
-CSV Logging
+Save Results
     ↓
-Health Summary
+Display Results
 ```
 
-## Example Output
+## Technologies
 
-```text
-========================================
-
-Health Check Summary
-
-========================================
-
-Websites checked: 3
-Websites UP: 3
-Websites DOWN: 0
-Average response time: 0.742 seconds
-```
+* Python
+* Flask
+* Requests
+* CSV
+* Git
+* GitHub
+* Docker
+* GitHub Actions
+* Render
 
 ## Project Structure
 
 ```text
 deployment-health-checker/
+│
+├── .github/
+│   └── workflows/
+│       └── ci.yml
 │
 ├── health_checker.py
 ├── health_log.csv
@@ -85,74 +86,132 @@ deployment-health-checker/
 └── README.md
 ```
 
-## How to Run
+## Running it locally
 
-### 1. Clone the repository
+### Clone the repository
 
 ```bash
 git clone https://github.com/SOblaize/deployment-health-checker.git
 ```
 
-### 2. Navigate into the project
+### Go into the project
 
 ```bash
 cd deployment-health-checker
 ```
 
-### 3. Install the required Python package
+### Install the dependencies
 
 ```bash
-pip install requests
+pip install -r requirements.txt
 ```
 
-### 4. Run the health checker
+### Run the application
 
 ```bash
 python3 health_checker.py
 ```
 
+Then open:
+
+```text
+http://127.0.0.1:10000
+```
+
 ## Running with Docker
 
-### 1. Build the Docker image
+Build the image:
 
 ```bash
 docker build -t deployment-health-checker .
 ```
 
-### 2. Run the container
+Run the container:
 
 ```bash
-docker run --rm deployment-health-checker
+docker run --rm -p 10000:10000 deployment-health-checker
 ```
 
-The container runs the health checker and displays the availability and response-time results in the terminal.
+Then open:
 
-## Skills Demonstrated
+```text
+http://localhost:10000
+```
 
-* Python scripting
-* HTTP requests
-* Website monitoring
-* Infrastructure health checks
-* Error handling
-* Response-time measurement
-* CSV data logging
-* Command-line execution
-* Git version control
-* GitHub repository management
+## GitHub Actions
 
-## Future Improvements
+I added a GitHub Actions workflow that runs the health checker when changes are pushed to the `main` branch or when a pull request is created.
 
-* Add continuous monitoring at scheduled intervals
-* Add email or notification alerts when a website goes DOWN
-* Create a monitoring dashboard
-* Store monitoring data in a database
-* Containerise the application using Docker
-* Deploy the monitoring system to a cloud environment
-* Add automated testing
-* Add CI/CD using GitHub Actions
+The workflow installs the dependencies and runs the Python application to make sure it still works.
+
+The workflow is located at:
+
+```text
+.github/workflows/ci.yml
+```
+
+## Docker
+
+The application is packaged into a Docker container using the `Dockerfile`.
+
+This means the application and its dependencies can be run in a consistent environment rather than relying on the setup of a particular computer.
+
+## Cloud Deployment
+
+The application is deployed as a Docker web service on Render.
+
+The deployment flow is:
+
+```text
+Code
+  ↓
+Git
+  ↓
+GitHub
+  ↓
+GitHub Actions
+  ↓
+Docker
+  ↓
+Render
+  ↓
+Live Application
+```
+
+Live application:
+
+https://deployment-health-checker.onrender.com
+
+## What I learned
+
+Through this project I gained experience with:
+
+* Building a Python monitoring script
+* Making HTTP requests
+* Handling errors and timeouts
+* Measuring response times
+* Working with CSV files
+* Using Git and GitHub
+* Creating a Docker image
+* Setting up GitHub Actions
+* Deploying an application to the cloud
+* Running a Flask web service
+* Understanding how an application moves from local development to a cloud environment
+
+## Possible improvements
+
+Some things I could add in the future:
+
+* Run checks continuously instead of only when the application starts
+* Add alerts when a website goes down
+* Add graphs showing response times over time
+* Store results in a database
+* Add more websites to monitor
+* Add automated tests
+* Use a production WSGI server
 
 ## Author
 
 **Shana Blaize**
 
-Computer Science student interested in **cloud computing, infrastructure, and technology operations**.
+BSc Computer Science student interested in cloud computing, infrastructure and DevOps.
